@@ -1,2 +1,2 @@
-# HumanSegmentation_PorjectQuarantine
- Segmentate each individual from a photo and export a png for each
+# HumanSegmentation_ProjectQuarantine
+ Segmentate each individual from a photo and export as seperate pngs
