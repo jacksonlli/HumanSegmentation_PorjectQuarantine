@@ -1,0 +1,16 @@
+
+.vs
+
+*.pyc
+*.so
+*.pkl
+
+.ipynb_checkpoints/
+__pycache__
+init
+logs
+snapshot
+lib/site-packages
+Scripts
+pyvenv.cfg
+imagenet_pretrain

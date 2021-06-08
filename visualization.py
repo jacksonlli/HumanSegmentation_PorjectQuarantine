@@ -5,7 +5,7 @@ import os
 import numpy as np
 
 #visualises json files formatted according the Pose2Seg specifications
-#instructions: put json file and images in the same folder
+#instructions: put json file and images in the same folder. Make sure the image_id in the json file corresponds to image name
 
 if __name__=='__main__':
 	parser = argparse.ArgumentParser(description="JSON visualization")
@@ -71,7 +71,6 @@ if __name__=='__main__':
 							i+=2
 						pts = np.array(pts).reshape((-1,1,2))
 						cv2.fillPoly(img_mask,[pts],color)
-						cv2.polylines(img,[pts],True, color)
 					img = cv2.addWeighted(img, 1, img_mask, 0.5, 0)
 				if args.keypoints:
 					#keypoints is a list of repeating x, y, and status values where each triplet represents a point
