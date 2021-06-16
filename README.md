@@ -5,6 +5,7 @@ currently only works on Windows due to the use of openpose.exe
 
 1. Download openpose binaries from https://github.com/CMU-Perceptual-Computing-Lab/openpose/releases and extract it in root (such that "root"/openpose/bin/)
 
+2.Follow first step in readme to download models.
 
 ## User stories
  As a user, I want to obtain a png of each segmented individual person (instance segmentation) in an image so that I can use them in Photoshop projects.
