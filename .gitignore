@@ -14,3 +14,4 @@ lib/site-packages
 Scripts
 pyvenv.cfg
 imagenet_pretrain
+openpose
