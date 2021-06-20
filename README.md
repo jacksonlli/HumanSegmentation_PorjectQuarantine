@@ -17,6 +17,6 @@ currently only works on Windows due to the use of openpose.exe
  As a user, I want the option to add multiple input images so that I can get more segmented people faster.
 
 ## References
-https://towardsdatascience.com/detection-free-human-instance-segmentation-using-pose2seg-and-pytorch-72f48dc4d23e
-https://arxiv.org/abs/1803.10683
+https://github.com/CMU-Perceptual-Computing-Lab/openpose
+https://github.com/liruilong940607/Pose2Seg
 
