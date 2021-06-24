@@ -1,6 +1,6 @@
-
+.lib
 .vs
-
+.share
 *.pyc
 *.so
 *.pkl

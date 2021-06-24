@@ -1,7 +1,8 @@
 from json_reformatter import reformatter
 from run_openpose import write_json
 from run_pose2seg import get_seg
-from visualization import visualize
+from visualization import mask_over_image, mask_binary
+from utils import write_pngs, get_trimap, filter_masks
 import os
 
 
@@ -18,12 +19,19 @@ masks_output_path = os.path.join("outputs", "masks")
 for file in os.listdir(raw_path):
     os.remove(os.path.join(raw_path, file))
 
-#get pose from openpose
+##get pose from openpose
 write_json(raw_path)
-#reformat
+##reformat
 reformatter(raw_path, template_path, images_path, formatted_path)
-#get segmentation masks
+##get segmentation masks
 masks = get_seg(images_path, keypoints_path, weights_path, output_path)
-#save masked images
-visualize(masks, images_path, masks_output_path, keypoints_path)
+##save masked images - optional
+#mask_over_image(masks, images_path, masks_output_path, keypoints_path)
+#mask_binary(masks, images_path, masks_output_path, keypoints_path)
+##remove "small" masks
+masks = filter_masks(masks, 0.33, images_path, keypoints_path)
+##transform the mask into a trimap
+trimaps = get_trimap(masks)
+##get png images
+#write_pngs(images_path, keypoints_path, output_path, trimaps)
 

@@ -1,8 +1,8 @@
 import numpy as np
 from tqdm import tqdm
 
-from modeling.build_model import Pose2Seg
-from datasets.CocoDatasetInfo import CocoDatasetInfo, annToMask
+from pose2seg.modeling.build_model import Pose2Seg
+from pose2seg.datasets.CocoDatasetInfo import CocoDatasetInfo, annToMask
 from pycocotools import mask as maskUtils
 
 import cv2
@@ -26,11 +26,12 @@ def get_masks(model, ImageRoot, AnnoFile, logger=print):
             
         output = model([img], [gt_kpts])
         
-        masks[image_id] = np.array(output[0])
+        masks[image_id] = np.array(output[0])*255
     return masks
 
 def get_seg(images_path, keypoints_path, weights_path, output_path):
-
+    #filter threshold: discard masks smaller than a % of the largest mask. 
+    #e.g. 0.33 will remove any mask shorter than a third of the height of the tallest mask
     print('===========> loading model <===========')
     model = Pose2Seg().cuda()
     model.init(weights_path)
@@ -41,6 +42,9 @@ def get_seg(images_path, keypoints_path, weights_path, output_path):
     masks = get_masks(model, images_path, keypoints_path)
     return masks
 
+
+                    
+                
 
 if __name__ == "__main__":
     weights_path = os.path.join("data", "weights", "pose2seg_release.pkl")

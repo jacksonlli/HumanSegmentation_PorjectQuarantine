@@ -11,7 +11,11 @@ python-dateutil==2.8.0
 PyYAML==5.1
 scipy==1.2.1
 six==1.12.0
-torch-nightly==1.0.0.dev20190330
+torch >= 1.1
 tqdm==4.31.1
 pkg-resources
 opencv-python
+tensorboardX
+toml
+easydict
+scikit-image

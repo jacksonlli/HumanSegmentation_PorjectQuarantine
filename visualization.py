@@ -4,7 +4,7 @@ import json
 import os
 import numpy as np
 
-def visualize(masks, images_path, output_path, keypoints_path):
+def mask_over_image(masks, images_path, output_path, keypoints_path):
     #get image ids to match mask to image
     with open(os.path.join(keypoints_path)) as f:
         jsonDict = json.load(f)
@@ -22,7 +22,20 @@ def visualize(masks, images_path, output_path, keypoints_path):
                 for i in range(3):
                     colored_mask[:,:,i][mask>0.5] = color[i]
                 img = cv2.addWeighted(img, 1, colored_mask, 0.5, 0)#hxwx3 vs hxwx1
-            cv2.imwrite(os.path.join(output_path,file[:-4]+".png"), img)
+            cv2.imwrite(os.path.join(output_path, file[:-4]+".png"), img)
+
+def mask_binary(masks, images_path, output_path, keypoints_path):
+    with open(os.path.join(keypoints_path)) as f:
+        jsonDict = json.load(f)
+    name2id = {}
+    for image in jsonDict['images']:
+        name2id[image['file_name']] = image['id']
+    for file in os.listdir(images_path):
+        if file.endswith(".jpg") or file.endswith(".png"):
+            i = 0
+            for mask in masks[name2id[file]]:
+                i+=1
+                cv2.imwrite(os.path.join(output_path, file[:-4] + "_" + str(i) + ".png"), mask)
 
 if __name__ == "__main__":
     raw_path = os.path.join("data", "annotations", "raw")
