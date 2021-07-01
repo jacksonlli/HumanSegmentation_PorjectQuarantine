@@ -29,9 +29,7 @@ def get_masks(model, ImageRoot, AnnoFile, logger=print):
         masks[image_id] = np.array(output[0])*255
     return masks
 
-def get_seg(images_path, keypoints_path, weights_path, output_path):
-    #filter threshold: discard masks smaller than a % of the largest mask. 
-    #e.g. 0.33 will remove any mask shorter than a third of the height of the tallest mask
+def get_seg_masks(images_path, keypoints_path, weights_path, output_path):
     print('===========> loading model <===========')
     model = Pose2Seg().cuda()
     model.init(weights_path)
@@ -41,14 +39,3 @@ def get_seg(images_path, keypoints_path, weights_path, output_path):
     #get masks
     masks = get_masks(model, images_path, keypoints_path)
     return masks
-
-
-                    
-                
-
-if __name__ == "__main__":
-    weights_path = os.path.join("data", "weights", "pose2seg_release.pkl")
-    keypoints_path =  os.path.join("data", "annotations", "formatted", "reformatted.json")
-    images_path =  os.path.join("data", "images")
-
-    get_seg(images_path, keypoints_path, weights_path)

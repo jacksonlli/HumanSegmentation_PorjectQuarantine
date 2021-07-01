@@ -168,7 +168,7 @@ class CocoDatasetInfo():
         # _prep_roidb_entry()    
         # ---------------------------
         image_id = self.image_ids[idx]
-        datainfo = self.COCO.loadImgs(image_id)[0]
+        datainfo = self.COCO.loadImgs([image_id])[0]
         rawdata = {
             #'dataset': self,
             #'flickr_url': datainfo['flickr_url'],
@@ -204,7 +204,7 @@ class CocoDatasetInfo():
         # ---------------------------
         # Include ground-truth object annotations
         """Add ground truth annotation metadata to an roidb entry."""
-        ann_ids = self.COCO.getAnnIds(imgIds=rawdata['id'], catIds=self.category_ids, iscrowd=None)
+        ann_ids = self.COCO.getAnnIds(imgIds=[rawdata['id']], catIds=self.category_ids, iscrowd=None)
         objs = self.COCO.loadAnns(ann_ids)
         # Sanitize bboxes -- some are invalid
         valid_objs = []
