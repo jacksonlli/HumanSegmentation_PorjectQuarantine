@@ -29,9 +29,7 @@ def filter_masks(masks, scale_threshold, keypoints_path):
         h_list = []
         #get mask heights
         for mask in image_masks:
-            contours,_ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-            rect = cv2.boundingRect(contours[0])
-            (x,y,w,h) = rect
+            h = max(np.sum(mask, axis=0))
             h_list.append(h)
             if h>largest_h:
                 largest_h = h
@@ -77,3 +75,14 @@ def fill_edges(mask, edge_width = 20):
     mask[:, -edge_width:][right_edge] = 128
 
     return mask
+
+def merge_masks(masks):
+    for img, image_masks in masks.items():
+        merged_mask = None
+        for mask in image_masks:
+            if merged_mask is None:
+                merged_mask = mask
+            else:
+                merged_mask[mask>0]=255
+        masks[img] = merged_mask.reshape(1, merged_mask.shape[0], merged_mask.shape[1])
+    return masks
